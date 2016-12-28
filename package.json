@@ -1,0 +1,23 @@
+{
+  "name": "proyectomaterial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "",
+    "bower": "",
+    "express": "",
+    "method-override": "",
+    "mongodb": "^2.2.16",
+    "mongoose": ""
+  },
+  "author": "cristian cortes",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}

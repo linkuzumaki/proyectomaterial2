@@ -1,0 +1,156 @@
+<md-content id="contenedor">
+   <!-- <h1>Página Principal</h1>
+    <p>{{ message }}</p>-->
+    <div layout="row" layout-xs="column">
+        <div flex="100"  flex-gt-sm="20">
+            <md-card class="md-whiteframe-8dp">
+                <md-card-header-text>
+                    <md-card-title>Seleccion de elementos</md-card-title>
+                </md-card-header-text>
+                <md-card-content>
+                    <div layout="row">
+                        <div flex="50">
+                            <md-list flex>
+                                <md-list-item>
+                                    <div  class="element boton grid" id="boton" style="display: none;height: 250px;width: 250px" >
+                                        <input  class="btn btn-success element"   value="boton">
+                                    </div>
+                                    <md-button crear-elementos id="elemt2" class="md-raised md-primary"><i class="material-icons md-48">crop_16_9</i></md-button>
+                                </md-list-item>
+                                <md-list-item >
+                                    <div id="panel" style="display: none">   
+                                        <md-card class="panelP card grid">
+                                            <md-card-header id="panelheader">
+                                                <md-card-header-text>
+                                                    <span class="md-title">Panel</span>
+                                                    <md-divider></md-divider>
+                                                </md-card-header-text> 
+                                            </md-card-header>
+                                            <md-card-content id="panelbody" class="panelbody" style="height: 100%;margin: 5px"  ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return drop(event)">
+                                            </md-card-content>
+                                        </md-card>
+                                    </div>
+                                 
+                                    <md-button crear-elementos id="elemt6" class="md-raised md-primary"><i class="material-icons md-48">border_outer</i></md-button>
+                                </md-list-item>
+                                <md-list-item >
+                                    <div id="parrafos" style="display:none" ng-controller="ModalCtrl">
+                                        <md-content flex layout-padding class="input-group element parrafoPH" style="word-wrap: break-word" >
+                                            <p class="lead element"  id="parrafoh" draggable="false" ng-modal="elemento.parrafo">
+                                                Lorem ipsum dolor sit amet, ne quod novum mei.</p>
+                                        </md-content>
+                                    </div>
+                                    <md-button crear-elementos id="elemt1" class="md-raised md-primary"><i class="material-icons md-48">format_indent_decrease</i>p</md-button>
+                                </md-list-item>
+                                <md-list-item>
+                                    <div id="txtarea" style="display: none">
+                                    <div  class="form-group element areap"  >
+                                        <label for="comment" class="tituloarea" id="areatitulo" >Comment:</label>
+                                        <textarea class="form-control areacuadro"  rows="5" id="comment"></textarea>
+                                    </div>
+                                    </div>
+                                    <md-button crear-elementos id="elemt10" class="md-raised md-primary"><i class="material-icons md-48">font_download</i>ar</md-button>
+                                </md-list-item>
+                                <md-list-item>
+                                    <div id="select" style="display: none">
+                                        <div class="form-group element selectP" ng-controller="ModalCtrl">
+                                            <label  class="textoselect">Select list:</label>
+                                            <select class="form-control selecthijo" ng-model="listan" ng-options="listaselect.texto for listaselect in lista" ng-mouseenter="verlista()" >
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <md-button crear-elementos id="elemt11" class="md-raised md-primary">select+</md-button>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-button crear-elementos id="elemt9" class="md-raised md-primary"><i class="material-icons md-48">location_on</i></md-button>
+                                </md-list-item>
+
+                            </md-list>
+                        </div>
+                        <div flex="50">
+                            <md-list flex>
+                                <md-list-item>
+                                    <div id="texbox" style="display:none" class="textoP">
+                                        <div class="input-group element"  >
+                                            <span class="input-group-addon textotitulo" id="ti">titulo</span>
+                                            <input type="text" class="form-control texto" id="teo" aria-describedby="basic-addon3" draggable="false">
+                                        </div>
+                                    </div>
+                                    <md-button crear-elementos id="elemt3" class="md-raised md-primary">texto+</md-button>
+                                </md-list-item>
+                                <md-list-item>
+                                    <div id="check" style="display:none" class="textoP" ng-controller="ModalCtrl">
+                                        <div class="input-group element" >
+                                            <span class="input-group-addon check" style="border-color: #9d9d9d"><input type="checkbox" aria-label="..." ></span>
+                                            <input type="text" class="form-control textocheck" aria-label="..." >
+                                        </div>
+                                    </div>
+                                    <md-button crear-elementos id="elemt4" class="md-raised md-primary"><i class="material-icons md-48">check_box</i></md-button>
+
+                                </md-list-item>
+                                <md-list-item>
+                                        <div  id="img" class="col-xs-6 col-md-3 imgelementP" style="display: none" >
+                                            <div  class="thumbnail element" style="width: 100%;height: 100%;margin-bottom: 0px;">
+                                                <img src="img/img-no-disponible.jpg" class="thumb" draggable="false" style="width: 100%;height: 100%;">
+                                            </div>
+                                        </div>
+                                    <md-button crear-elementos id="elemt7" class="md-raised md-primary"><i class="material-icons md-48">photo</i></md-button>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-button crear-elementos id="elemt8" class="md-raised md-primary"><i class="material-icons md-48">photo_camera</i></md-button>
+                                </md-list-item>
+                                <md-list-item>
+                                    <div id="radio" style="display: none">
+                                        <div class="radio element radioP">
+                                            <label>
+                                                <input type="radio" name="optradio">Option 1
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <md-button crear-elementos id="elemt13" class="md-raised md-primary"><i class="material-icons md-48">check_circle</i></md-button>
+                                </md-list-item>
+                                <md-list-item>
+                                    <md-button crear-elementos id="elemt14" class="md-raised md-primary"><i class="material-icons md-48">chrome_reader_mode</i>+</md-button>
+                                </md-list-item>
+                            </md-list>
+                        </div>
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex="100" flex-gt-sm="50" >
+            <md-card id="pizarra" layout-paddin class="md-whiteframe-8dp">
+                <md-card-header-text>
+                    <md-card-title>Creacion Formulario</md-card-title>
+                </md-card-header-text>
+                <md-divider></md-divider>
+                <md-card-content ng-controller="grillaCtrl"  layout-padding  id="contpizarra"  ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return drop(event)">
+
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex="100" flex-gt-sm="25">
+            <md-card ng-controller="viewCtrl">
+                <md-card-header-text>
+                    <md-card-title>view mobil</md-card-title>
+                    <md-button class="md-accent" ng-click="viewmovil()">ver</md-button>
+                </md-card-header-text>
+                <md-divider></md-divider>
+                <md-card-content>
+
+                    <form action="/main" method="POST">
+                        <input type="text" placeholder="name" name="name">
+                        <input type="text" placeholder="quote" name="quote">
+                        <button type="submit">Submit</button>
+                    </form>
+                    <div id="innerHTMLtxt"></div>
+                   <div layout="column" id="vistamovil">
+
+                   </div>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+</md-content>

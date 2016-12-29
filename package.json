@@ -13,7 +13,8 @@
     "express": "",
     "method-override": "",
     "mongodb": "^2.2.16",
-    "mongoose": ""
+    "mongoose": "",
+    "winston":""
   },
   "author": "cristian cortes",
   "license": "ISC",

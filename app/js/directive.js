@@ -2,10 +2,10 @@ var contador =0;
 var borrarHtml = ("<button ng-controller='EventoElementCtrl' class='delete-button right'  style='float: right;color:black' id='borrar'>x</button>");
 var editarHtml = ("<button ng-controller='ModalCtrl' class='editar-button right'  style='float: right;color:black' id='editar'>/</button>");
 var agregarHtml = ("<button ng-controller='EventoElementCtrl' class='crear-button right'  style='float: right;color:black' id='editar'>+</button>");
-
+var todosElementos=[];
 angular.module('app.directive', [])
 
-.directive('crearElementos',function($compile){
+.directive('crearElementos',['$compile','storageLista',function($compile,storageLista){
 
     return {
         scope:{},
@@ -116,15 +116,22 @@ angular.module('app.directive', [])
                 $(copy).children('.editar-button').attr("ng-click", "clickToOpen(e)");
                 $(copy).children('.crear-button').attr("id", "crear" + contador);
                 $(copy).children('.crear-button').attr("ng-click", "crear(e)");
-                angular.element(document.getElementById('fila110'))
-                    .append($compile(copy)(scope));
 
+
+                id=$(copy).attr("id")
+
+                angular.element(document.getElementById('fila110'))
+                        .append($compile(copy)(scope));
+
+               // todosElementos.push({elemento:elementosave});
+                todosElementos.push({elemento: document.getElementById(id).innerHTML})
+                storageLista.guardarlista(todosElementos,'TodosElementos')
                 contador += 1;
             })
         }
     }
 
-})
+}])
 
 
 .directive('fileInput',function($parse){

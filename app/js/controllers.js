@@ -46,10 +46,6 @@ angular.module('app.controllers', [])
             }])
     .controller('grillaCtrl',['$scope', function ($scope) {
 
-       /* $scope.number = 12;
-        $scope.getNumber = function (num) {
-            return new Array(num);
-        };*/
        var nc=8,nf =6,n=0,i= 1;
         //creando la grilla
         while (n < nc) {
@@ -796,12 +792,48 @@ angular.module('app.controllers', [])
 
         };
     }])
-    .controller('viewCtrl',['$scope',function($scope){
+    .controller('viewCtrl',['$scope','storageLista',function($scope,storageLista){
        $scope.viewmovil=function(){
            $scope.elemtpizarra=document.getElementById('contpizarra');
            var copy = $($scope.elemtpizarra).clone(true);
            $('#vistamovil').append(copy);
            document.getElementById("innerHTMLtxt").textContent= document.getElementById("contpizarra").innerHTML
        }
-    }])
+       $scope.verarray=function(){
+           $scope.lista=storageLista.listadatos('TodosElementos')
+           console.log(  $scope.lista);
 
+       }
+
+    }])
+    .controller('enviarCtrl',function ($scope, $http,$mdToast) {
+
+        $scope.registardatos = function() {
+            $http.post('/ejemplo',({nombre:$scope.nombre, apellido:$scope.apellido}))
+                .then(function () {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('dato guardado')
+                            .hideDelay(1000)
+                            .position('top right')
+                    );
+                    $scope.nombre="",
+                    $scope.apellido=""
+                })
+                .catch(function(err){
+                    console.log('Error: ' + err);
+                })
+        };
+
+        $scope.obtnertodosdatos=function(){
+
+            $http.get('/ejemplo')
+                .then(function (data) {
+                    console.log(data)
+                })
+                .catch(function (err) {
+                    console.log('Error: ' + err);
+                })
+
+        }
+    })

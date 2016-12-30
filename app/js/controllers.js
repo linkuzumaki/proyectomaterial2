@@ -80,7 +80,7 @@ angular.module('app.controllers', [])
             i = 1;
         }*/
     }])
-    .controller('ModalCtrl',["$scope","storageLista","ngDialog","$compile","fileReader","$mdToast", function ($scope,storageLista,ngDialog,$compile,fileReader,$mdToast) {
+    .controller('ModalCtrl',["$scope","storageLista","ngDialog","$compile","fileReader","$mdToast","dbelemento" ,function ($scope,storageLista,ngDialog,$compile,fileReader,$mdToast,dbelemento) {
 
                 $scope.clickToOpen = function () {
                     idelemento = event.target.id;
@@ -142,6 +142,21 @@ angular.module('app.controllers', [])
                     idh.style.color=$scope.textConfig.textcolor
                     idh.style.fontSize=$scope.font_size.opcion+'px';
                     $('#' +id).val($scope.nomb_elementobtn);
+                    $scope.CurrentDate = new Date();
+                    var hoy = new Date();
+                    var fecha =hoy.getDate()
+                    var idformulario='form130121610',nombformulario='form1',
+                        dateform= $scope.CurrentDate ,idelement=abuelo;
+                    var element=document.getElementById(abuelo).innerHTML
+                    $scope.elementoboton={
+
+                    }
+                    $scope.elementoboton.idform=idformulario;
+                    $scope.elementoboton.nombre=nombformulario;
+                    $scope.elementoboton.fecha=dateform;
+                    $scope.elementoboton.idelemento=idelement;
+                    $scope.elementoboton.elementos=element;
+                    dbelemento.guardarelemento( $scope.elementoboton);
 
                 }
                 $scope.editartexto=function(padre) {
@@ -792,7 +807,7 @@ angular.module('app.controllers', [])
 
         };
     }])
-    .controller('viewCtrl',['$scope','storageLista',function($scope,storageLista){
+    .controller('viewCtrl',['$scope','storageLista','dbelemento',function($scope,storageLista,dbelemento){
        $scope.viewmovil=function(){
            $scope.elemtpizarra=document.getElementById('contpizarra');
            var copy = $($scope.elemtpizarra).clone(true);
@@ -802,6 +817,11 @@ angular.module('app.controllers', [])
        $scope.verarray=function(){
            $scope.lista=storageLista.listadatos('TodosElementos')
            console.log(  $scope.lista);
+
+       }
+       $scope.verdatos=function () {
+         $scope.data=  dbelemento.mostrarall()
+
 
        }
 

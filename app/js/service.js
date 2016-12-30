@@ -14,6 +14,55 @@ angular.module('app.service',[])
         }
 
     }])
+    .service('dbelemento',function($mdToast,$http){
+       var  elementos1=[];
+        this.guardarelemento=function(elemento){
+            $http.post('/elemento',({
+                idform:elemento.idform,
+                nameform:elemento.nombre,
+                dateform:elemento.dateform,
+                idelement:elemento.idelemento,
+                element:elemento.elementos,
+
+            }))
+                .then(function () {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('dato guardado')
+                            .hideDelay(1000)
+                            .position('top right')
+                    );
+                })
+                .catch(function(err){
+                    console.log('Error: ' + err);
+                })
+
+
+                elementos.nameform=elemento.nombre;
+                elementos.dateform=elemento.fecha;
+
+            console.log(elementos)
+
+
+
+
+        }
+        this.mostrarall=function () {
+            $http.get('/elemento')
+                .then(function (data) {
+
+                    angular.forEach(data.data, function (value, key) {
+                        elementos1.push(value.idform);
+                        console.log(key+':'+value)
+                    });
+
+                   // console.log(data)
+                })
+                .catch(function (err) {
+                    console.log('Error: ' + err);
+                })
+        }
+    })
     .factory('fileReader',function($q, $log){
         var onLoad = function(reader, deferred, scope) {
             return function () {

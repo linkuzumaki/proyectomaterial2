@@ -14,15 +14,15 @@ app.use(methodOverride());
 app.use(express.static(__dirname + '/app'));
 app.use(express.static(__dirname + '/bower_components'));
 
-routes = require('./model/modelCtrl.js')(app);
-
+//routes = require('./model/modelCtrl.js')(app);
+routes=require('./model/grud_elementos.js')(app);
 
 // Conexión
 mongoose.connect('mongodb://localhost:27017/proyectodb', function(err, database) {
-    if (err) return console.log(err)
+    if (err) return console.log('erro de conexion bd'+err)
     db = database
-    app.listen(3000,function (){
-        console.log('listening on 3000')
+    app.listen(3037,function (){
+        console.log('listening on 3035')
     })
 });
 

@@ -6,6 +6,7 @@
             <md-card class="md-whiteframe-8dp">
                 <md-card-header-text>
                     <md-card-title>Seleccion de elementos</md-card-title>
+
                 </md-card-header-text>
                 <md-card-content>
                     <div layout="row">
@@ -121,49 +122,31 @@
             </md-card>
         </div>
         <div flex="100" flex-gt-sm="50" >
-            <md-card id="pizarra" layout-paddin class="md-whiteframe-8dp">
-                <md-card-header-text>
-                    <md-card-title>Creacion Formulario</md-card-title>
-                </md-card-header-text>
-                <md-divider></md-divider>
-                <md-card-content ng-controller="grillaCtrl"  layout-padding  id="contpizarra"  ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return drop(event)">
+            <div layout="column">
+                <div flex>
+                    <md-card id="pizarra" layout-paddin class="md-whiteframe-8dp">
+                        <md-card-header-text>
+                            <md-card-title>Creacion Formulario</md-card-title>
+                        </md-card-header-text>
+                        <md-divider></md-divider>
+                        <md-card-content ng-controller="grillaCtrl"  layout-padding  id="contpizarra"  ondragenter="return enter(event)" ondragover="return over(event)" ondragleave="return leave(event)" ondrop="return drop(event)">
 
-                </md-card-content>
-            </md-card>
+                        </md-card-content>
+                        <md-card-actions layout="row" layout-align="end center" >
+                            <md-button class=" md-raised primary ">guardar</md-button>
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </div>
+
         </div>
         <div flex="100" flex-gt-sm="25">
-            <md-card ng-controller="viewCtrl">
+            <md-card >
                 <md-card-header-text>
                     <md-card-title>view mobil</md-card-title>
-                    <md-button class="md-accent" ng-click="viewmovil()">ver</md-button>
-                    <md-button class="md-accent" ng-click="verarray()">ver arra</md-button>
-                    <button ng-click="verdatos()">datos de mongo</button>
                 </md-card-header-text>
                 <md-divider></md-divider>
-                <md-card-content ng-controller="enviarCtrl">
-
-                    <form ng-model="newdatos" method="POST" >
-                        <input type="text" placeholder="name" name="nombre" ng-model="nombre">
-                        <input type="text" placeholder="apellido" name="apellido" ng-model="apellido">
-                        <button ng-click="registardatos()">Submit</button>
-
-                    </form>
-                    <md-button class="md-primary" ng-click="obtnertodosdatos()">ver datos bd</md-button>
-                    <div id="innerHTMLtxt"></div>
-                    <div id="datosmongo">
-                        <ul>
-                            <li  ng-repeat="item in data">
-                                <a>{{item.idform}}</a>
-
-                            </li>
-                        </ul>
-
-
-
-                    </div>
-                   <div layout="column" id="vistamovil">
-
-                   </div>
+                <md-card-content>
                 </md-card-content>
             </md-card>
         </div>

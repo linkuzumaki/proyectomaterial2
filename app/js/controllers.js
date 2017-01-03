@@ -24,7 +24,6 @@ angular.module('app.controllers', [])
                     myEl.remove();
 
                 };
-
                 $scope.crear = function () {
                     var id = event.target.id;// obtengo la id elemento del bar
                     var abuelo = $('#' + id).parent().attr("id");
@@ -147,16 +146,7 @@ angular.module('app.controllers', [])
                     var fecha =hoy.getDate()
                     var idformulario='form130121610',nombformulario='form1',
                         dateform= $scope.CurrentDate ,idelement=abuelo;
-                    var element=document.getElementById(abuelo).innerHTML
-                    $scope.elementoboton={
 
-                    }
-                    $scope.elementoboton.idform=idformulario;
-                    $scope.elementoboton.nombre=nombformulario;
-                    $scope.elementoboton.fecha=dateform;
-                    $scope.elementoboton.idelemento=idelement;
-                    $scope.elementoboton.elementos=element;
-                    dbelemento.guardarelemento( $scope.elementoboton);
 
                 }
                 $scope.editartexto=function(padre) {
@@ -174,6 +164,7 @@ angular.module('app.controllers', [])
                     hijoid.style.backgroundColor= $scope.textConfig.colorfondo;
                     abueloid.style.width= $scope.largoelemento.width;
                     $scope.posiciontext( posicion, padre);
+                    $scope.element=document.getElementById(abuelo).innerHTML
                 }
                 $scope.editarparrafo=function(padre){
 
@@ -191,8 +182,7 @@ angular.module('app.controllers', [])
                     padreid.style.height='0px';
                     padreid.style.backgroundColor= $scope.textConfig.textfondo;
                     padreid.style.wordWrap='break-word'
-                   // $scope.elemento={'parrafo':[{}]};
-                   // $scope.elementos.push({element:[{  id: $scope.elemento.parrafo.id }]});
+
                 }
                 $scope.editarcheck=function (padre) {
 
@@ -328,7 +318,6 @@ angular.module('app.controllers', [])
                        var padre= $('#' + abuelo).children('.element').attr("id");
                         console.log(padre);
                         $scope.editarboton(abuelo);
-
                     }
                     //parrafo
                     if ($('#' + padre).children('.element').attr("class") === 'lead element') {
@@ -501,6 +490,7 @@ angular.module('app.controllers', [])
                 {id:5,width:'350px'}
             ]
             $scope.datos = [];
+            $scope.elementossave=[];
             $scope.lista=[]
             $scope.listamain=[];
 
@@ -807,25 +797,6 @@ angular.module('app.controllers', [])
 
         };
     }])
-    .controller('viewCtrl',['$scope','storageLista','dbelemento',function($scope,storageLista,dbelemento){
-       $scope.viewmovil=function(){
-           $scope.elemtpizarra=document.getElementById('contpizarra');
-           var copy = $($scope.elemtpizarra).clone(true);
-           $('#vistamovil').append(copy);
-           document.getElementById("innerHTMLtxt").textContent= document.getElementById("contpizarra").innerHTML
-       }
-       $scope.verarray=function(){
-           $scope.lista=storageLista.listadatos('TodosElementos')
-           console.log(  $scope.lista);
-
-       }
-       $scope.verdatos=function () {
-         $scope.data=  dbelemento.mostrarall()
-
-
-       }
-
-    }])
     .controller('enviarCtrl',function ($scope, $http,$mdToast) {
 
         $scope.registardatos = function() {
@@ -856,4 +827,272 @@ angular.module('app.controllers', [])
                 })
 
         }
+    })
+    .controller('OpenModalCtrl',['$scope','ngDialog',function($scope,ngDialog){
+            $scope.abrirModal=function() {
+            id_elemento = document.getElementById(event.target.id);
+            $scope.dialog = ngDialog.open({
+                class: 'ngdialog-theme-default',
+                template: 'templates/modal.html',
+                width: '50%',
+                height: '100%',
+                controller: 'EdicionElementosCtrl',
+                scope: $scope
+            });
+        }
+            $scope.posiciontext=function(posicion,id){
+                if(posicion==='derecha'){
+                    $($('#' + id).children('.textotitulo')).before($('#' + id).children('.texto')); //derecha
+                    $($('#' + id).children('.check')).before($('#' + id).children('.textocheck')); //derecha
+                }else if(posicion==='izquierda'){
+                    $($('#' + id).children('.texto')).before($('#' + id).children('.textotitulo'));//izquierda
+                    $($('#' + id).children('.textocheck')).before($('#' + id).children('.check')); //izquierda
+                }
+            }
+
+            //modifica los atributos segun lo escrito en el modal
+
+            $scope.texbox=function(){
+                $($scope.modal_elementos.idtitulo).text($scope.modal_elementos.nomb_elemento);
+                idabuelo    =   $scope.modal_elementos.idabuelo;
+                idtitulo    =   $scope.modal_elementos.idtitulo;
+                id          =   $($scope.modal_elementos.idpadre).attr('id');
+                idtitulo.style.color            =   $scope.modal_elementos.textConfig.textcolor;
+                idtitulo.style.fontFamily       =   $scope.modal_elementos.familiaelegida.name;
+                idtitulo.style.backgroundColor  =   $scope.modal_elementos.textConfig.colorfondo
+                idabuelo.style.width            =   $scope.modal_elementos.largoelemento.width;
+                $scope.posiciontext($scope.modal_elementos.posicion,id);
+            }
+            $scope.boton=function () {
+
+                idpadre                     =   $scope.modal_elementos.idpadre;
+                idabuelo                    =   $scope.modal_elementos.idabuelo;
+                idabuelo.style.width        =   $scope.modal_elementos.anchoelement.width;
+                idabuelo.style.height       =   $scope.modal_elementos.altoelement.height;
+
+                idpadre.style.backgroundColor       =   $scope.modal_elementos.textConfig.colorfondo ;
+                idpadre.style.color                 =   $scope.modal_elementos.textConfig.textcolor
+                idpadre.style.fontSize              =   $scope.modal_elementos.font_size+'px';
+                $(idpadre).val($scope.modal_elementos.nomb_elementobtn);
+            }
+            $scope.panel=function () {
+                var  numero=0,inicio=1;
+                var idcolumnas,idfilas;
+                var idhijo=$scope.modal_elementos.idhijo;
+                console.log($scope.modal_elementos.idhijo);
+                var numeroColumnas=$('#columnas').val();
+                var numeroFilas=$('#filas').val();
+
+                idcolumnas="columnas"+idhijo;
+                while(numero<numeroColumnas){
+                    idfilas="filas"+idhijo+numero;
+                    var row ='<div layout="row" style="padding:0px;" class="ng-scope layout-row" id="'+idfilas+'"></div>';
+                    $('#'+idhijo).append(row);
+                    for(inicio;inicio <= numeroFilas;inicio++){
+                        var col='<div layout="column" class="columnas ng-scope layout-column" id="' + idcolumnas + inicio + numero + '"></div>';
+                        $('#'+idfilas).append(col);
+                    }
+                    numero++;
+                    inicio = 1;
+                }
+
+            }
+
+
+            // guardar elementos
+
+            $scope.saveEdicion=function(){
+                //obtner id  padre y abuelo del elemento
+
+                var abuelo_id = $(id_elemento).parent().attr("id");
+                $scope.id_abuelo=document.getElementById(abuelo_id)
+                var padre_id = $($scope.id_abuelo).children().attr('id');
+                $scope.id_padre=document.getElementById(padre_id)
+
+                if ($($scope.id_padre).children('.texto').attr("class") === 'form-control texto') {
+                    $scope.texbox($scope.id_padre);
+                }
+                if ($($scope.id_abuelo).attr("class") === 'element boton grid ng-scope') {
+                    $scope.boton();
+                }
+                if ($($scope.id_padre).attr("class") === 'panelP card grid _md') {
+                    $scope.panel();
+                }
+                ngDialog.closeAll();
+            }
+
+
+    }])
+    .controller('EdicionElementosCtrl',function ($scope) {
+
+        //obtner id  padre y abuelo del elemento
+
+        var abuelo_id = $(id_elemento).parent().attr("id");
+        $scope.id_abuelo=document.getElementById(abuelo_id)
+        var padre_id = $($scope.id_abuelo).children().attr('id');
+        $scope.id_padre=document.getElementById(padre_id)
+
+        //obtner la clase estilo elementos padre y abuelo
+
+        $scope.class_padre=$($scope.id_padre).attr('class');
+
+        //cambio id a hijos de los elementos
+        $($scope.id_padre).children('.textotitulo').attr('id','titulotxto'+padre_id);
+        $($scope.id_padre).children('.panelbody').attr('id',"panelb" + contador);
+
+        // array de elemento
+
+            $scope.Atributos_elementos={
+                textbox:{},
+                boton:{}
+            };
+        //array de elementos del modal
+        $scope.modal_elementos={
+            fontfamilia:[
+                { id: 1, name: 'Arial' },
+                { id: 2, name: 'Arial Black' },
+                { id: 3, name: 'Courier New' },
+                { id: 4, name: 'Georgia' },
+                { id: 5, name: 'Comic Sans MS' },
+                { id: 6, name: 'Impact' },
+                { id: 7, name: 'Times New Roman' },
+                { id: 8, name: 'Trebuchet MS' },
+                { id: 9, name: 'Verdana' }
+            ],
+            widthtextbox:[
+                {id:1,width:'150px'},
+                {id:2,width:'200px'},
+                {id:3,width:'250px'},
+                {id:4,width:'300px'},
+                {id:5,width:'350px'}
+            ],
+            textConfig:{},
+            anchotexto:[
+                {id:1,name:'grande', clase:'input-group input-group-lg'},
+                {id:2,name:'pequeño',clase:"input-group input-group-sm"},
+                {id:3,name:'normal',clase:"input-group element"},
+            ],
+            posicion: 'izquierda',
+            widthbuton:[
+                {id:1,width:'50px'},
+                {id:2,width:'100px'},
+                {id:3,width:'150px'},
+                {id:4,width:'200px'},
+                {id:5,width:'250px'},
+                {id:6,width:'300px'},
+                {id:7,width:'350px'},
+                {id:8,width:'400px'},
+            ],
+            heightbuton:[
+                {id:1,height:'50px'},
+                {id:2,height:'100px'},
+                {id:3,height:'150px'},
+                {id:4,height:'200px'},
+            ]
+
+        }
+
+        //Elementos obteniendo sus atributos y agregandolos al modal
+        if ($($scope.id_padre).children('.texto').attr("class") === 'form-control texto') {
+            $scope.verattrtexto = 'true';
+            $scope.hijoprimario=$($scope.id_padre).children('.textotitulo').attr('id');
+            $scope.id_hijo1=document.getElementById($scope.hijoprimario)
+            $scope.Atributos_elementos.textbox.idabuelo     =   $scope.id_abuelo;
+            $scope.Atributos_elementos.textbox.idpadre      =   $scope.id_padre;
+            $scope.Atributos_elementos.textbox.clasepadre   =   $scope.class_padre;
+            $scope.Atributos_elementos.textbox.idtitulo     =   $scope.id_hijo1;
+            $scope.Atributos_elementos.textbox.texttitulo   =   $($scope.id_hijo1).text();
+            $scope.Atributos_elementos.textbox.color        =   $($scope.id_hijo1).css('color')
+            $scope.Atributos_elementos.textbox.color_fondo  =   $($scope.id_hijo1).css('background-color');
+            $scope.Atributos_elementos.textbox.font_size    =   $($scope.id_hijo1).css('font-size');
+            $scope.Atributos_elementos.textbox.font_family  =   $($scope.id_hijo1).css('font-family');
+            $scope.Atributos_elementos.textbox.widthtextbox =   $($scope.id_padre).css('width');
+
+            $scope.modal_elementos.fontfamilia.push({id:10,name:$scope.Atributos_elementos.textbox.font_family});
+            $scope.modal_elementos.familiaelegida=$scope.modal_elementos.fontfamilia[9];
+            $scope.modal_elementos.widthtextbox.push({id:6,width:  $scope.Atributos_elementos.textbox.widthtextbox});
+            $scope.modal_elementos.largoelemento= $scope.modal_elementos.widthtextbox[5];
+
+            $scope.modal_elementos.nomb_elemento            =   $scope.Atributos_elementos.textbox.texttitulo;
+            $scope.modal_elementos.textConfig.textcolor     =   $scope.Atributos_elementos.textbox.color ;
+            $scope.modal_elementos.idpadre                  =   $scope.Atributos_elementos.textbox.idpadre;
+            $scope.modal_elementos.idabuelo                 =   $scope.Atributos_elementos.textbox.idabuelo;
+            $scope.modal_elementos.textConfig.colorfondo    =   $scope.Atributos_elementos.textbox.color_fondo;
+            $scope.modal_elementos.textConfig.font_size     =   $scope.Atributos_elementos.textbox.font_size;
+            $scope.modal_elementos.idtitulo                 =   $scope.Atributos_elementos.textbox.idtitulo ;
+            console.log( $scope.modal_elementos.textConfig.textcolor )
+            if( $scope.Atributos_elementos.textbox.clasepadre==='input-group element'){
+                $scope.modal_elementos.anchoelegido =$scope.modal_elementos.anchotexto[2]
+            }else if(  $scope.Atributos_elementos.textbox.clasepadre==='input-group input-group-lg'){
+                $scope.modal_elementos.anchoelegido =$scope.modal_elementos.anchotexto[0]
+            }else if( $scope.Atributos_elementos.textbox.clasepadre==='input-group input-group-sm'){
+                $scope.modal_elementos.anchoelegido =$scope.modal_elementos.anchotexto[1]
+            }
+            // $scope.anchotext(ancho,padre);
+            $scope.cambio = function () {
+                $scope.modal_elementos.nomb_elemento;
+                $scope.modal_elementos.textConfig.font_size;
+                $scope.modal_elementos.textConfig.textcolor;
+                $scope.modal_elementos.textConfig.colorfondo;
+                $scope.modal_elementos.familiaelegida;
+                $scope.modal_elementos.largoelemento;
+                $scope.modal_elementos.idpadre;
+                $scope.modal_elementos.anchoelegido;
+                $scope.modal_elementos.posicion;
+                $scope.modal_elementos.idtitulo;
+                $('#ejemplotexbox').attr('class', $scope.modal_elementos.anchoelegido.clase)
+                $scope.posiciontext( $scope.modal_elementos.posicion,'ejemplotexbox');
+            }
+
+
+        }
+        if ($($scope.id_abuelo).attr("class") === 'element boton grid ng-scope'){
+            $scope.verattrboton = 'true';
+
+            $scope.Atributos_elementos.boton.idabuelo       =   $scope.id_abuelo
+            $scope.Atributos_elementos.boton.idpadre        =   $scope.id_padre
+            $scope.Atributos_elementos.boton.valor          =   $($scope.id_padre).val();
+            $scope.Atributos_elementos.boton.color          =   $($scope.id_padre).css('color')
+            $scope.Atributos_elementos.boton.font_size      =   $($scope.id_padre).css('font-size');
+            $scope.Atributos_elementos.boton.color_fondo    =   $($scope.id_padre).css('background-color');
+            $scope.Atributos_elementos.boton.widthbton      =   $($scope.id_padre).css('width');
+            $scope.Atributos_elementos.boton.heightbton     =   $($scope.id_padre).css('height');
+
+            $scope.modal_elementos.widthbuton.push({id:9,width: $scope.Atributos_elementos.boton.widthbton});
+            $scope.modal_elementos.anchoelement=$scope.modal_elementos.widthbuton[8];
+            $scope.modal_elementos.heightbuton.push({id:5,height: $scope.Atributos_elementos.boton.heightbton});
+            $scope.modal_elementos.altoelement=$scope.modal_elementos.heightbuton[4];
+
+            $scope.modal_elementos.idabuelo                 =   $scope.Atributos_elementos.boton.idabuelo;
+            $scope.modal_elementos.idpadre                  =   $scope.Atributos_elementos.boton.idpadre;
+            $scope.modal_elementos.textConfig.textcolor     =   $scope.Atributos_elementos.boton.color;
+            $scope.modal_elementos.textConfig.colorfondo    =   $scope.Atributos_elementos.boton.color_fondo;
+            $scope.modal_elementos.nomb_elementobtn         =   $scope.Atributos_elementos.boton.valor;
+
+            var str =$scope.Atributos_elementos.boton.font_size ;
+            var fontsize = str.split("px");
+            $scope.modal_elementos.font_size= fontsize[0];
+
+            $scope.cambio = function () {
+                $scope.modal_elementos.idpadre;
+                $scope.modal_elementos.idabuelo;
+                $scope.modal_elementos.anchoelement;
+                $scope.modal_elementos.altoelement;
+                $scope.modal_elementos.font_size;
+                $scope.modal_elementos.textConfig.textcolor;
+                $scope.modal_elementos.textConfig.colorfondo;
+            }
+
+
+        }
+        if ($($scope.id_padre).attr("class") === 'panelP card grid _md') {
+            $scope.verattrpanel='true';
+            $scope.hijo=$($scope.id_padre).children('.panelbody').attr('id')
+            $scope.Atributos_elementos.idabuelo=$scope.id_abuelo;
+            $scope.Atributos_elementos.idpadre=$scope.id_padre;
+            $scope.Atributos_elementos.idpadre=$scope.hijo;
+
+            $scope.modal_elementos.idhijo= $scope.Atributos_elementos.idpadre=$scope.hijo;
+        }
+
     })

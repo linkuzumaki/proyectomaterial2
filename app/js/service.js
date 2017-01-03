@@ -50,13 +50,8 @@ angular.module('app.service',[])
         this.mostrarall=function () {
             $http.get('/elemento')
                 .then(function (data) {
-
-                    angular.forEach(data.data, function (value, key) {
-                        elementos1.push(value.idform);
-                        console.log(key+':'+value)
-                    });
-
-                   // console.log(data)
+                    console.log(data)
+                    return data;
                 })
                 .catch(function (err) {
                     console.log('Error: ' + err);

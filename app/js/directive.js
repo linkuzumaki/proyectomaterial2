@@ -1,6 +1,6 @@
 var contador =0;
 var borrarHtml = ("<button ng-controller='EventoElementCtrl' class='delete-button right'  style='float: right;color:black' id='borrar'>x</button>");
-var editarHtml = ("<button ng-controller='ModalCtrl' class='editar-button right'  style='float: right;color:black' id='editar'>/</button>");
+var editarHtml = ("<button ng-controller='OpenModalCtrl' class='editar-button right'  style='float: right;color:black' id='editar'>/</button>");
 var agregarHtml = ("<button ng-controller='EventoElementCtrl' class='crear-button right'  style='float: right;color:black' id='editar'>+</button>");
 var todosElementos=[];
 angular.module('app.directive', [])
@@ -113,7 +113,7 @@ angular.module('app.directive', [])
                 $(copy).children('.delete-button').attr("id", "eliminar" + contador);
                 $(copy).children('.delete-button').attr("ng-click", "eliminar()");//se agrega el evento eliminar  despues de agregar el boton al clon
                 $(copy).children('.editar-button').attr("id", "editar" + contador);
-                $(copy).children('.editar-button').attr("ng-click", "clickToOpen(e)");
+                $(copy).children('.editar-button').attr("ng-click", "abrirModal()");
                 $(copy).children('.crear-button').attr("id", "crear" + contador);
                 $(copy).children('.crear-button').attr("ng-click", "crear(e)");
 

@@ -493,12 +493,10 @@ angular.module('app.controllers', [])
             $scope.elementossave=[];
             $scope.lista=[]
             $scope.listamain=[];
-
             $scope.formaimg= [
                 {title: 'cuadrado',value:'true',name:"cuadrado"},
                 {title: 'circular',value:'false',name:"circular"}
             ];
-
             $scope.formaimmagen={
                 opcion:null,
             }
@@ -830,8 +828,9 @@ angular.module('app.controllers', [])
     })
     .controller('OpenModalCtrl',['$scope','ngDialog',function($scope,ngDialog){
             $scope.abrirModal=function() {
-            id_elemento = document.getElementById(event.target.id);
-            $scope.dialog = ngDialog.open({
+                id_elemento = document.getElementById(event.target.id);
+
+                $scope.dialog = ngDialog.open({
                 class: 'ngdialog-theme-default',
                 template: 'templates/modal.html',
                 width: '50%',
@@ -839,7 +838,7 @@ angular.module('app.controllers', [])
                 controller: 'EdicionElementosCtrl',
                 scope: $scope
             });
-        }
+            }
             $scope.posiciontext=function(posicion,id){
                 if(posicion==='derecha'){
                     $($('#' + id).children('.textotitulo')).before($('#' + id).children('.texto')); //derecha
@@ -861,6 +860,7 @@ angular.module('app.controllers', [])
                 idtitulo.style.fontFamily       =   $scope.modal_elementos.familiaelegida.name;
                 idtitulo.style.backgroundColor  =   $scope.modal_elementos.textConfig.colorfondo
                 idabuelo.style.width            =   $scope.modal_elementos.largoelemento.width;
+                $($scope.modal_elementos.idpadre).attr('class',$scope.modal_elementos.anchoelegido.clase)
                 $scope.posiciontext($scope.modal_elementos.posicion,id);
             }
             $scope.boton=function () {
@@ -897,8 +897,16 @@ angular.module('app.controllers', [])
                 }
 
             }
+            $scope.check=function(){
+                idabuelo    =   $scope.modal_elementos.idabuelo;
+                idhijo1     =   $scope.modal_elementos.idhijo1;
+                id          =   $($scope.modal_elementos.idpadre).attr('id');
 
-
+                idabuelo.style.width            =  $scope.modal_elementos.largoelemento.width;
+                idhijo1.style.backgroundColor   =  $scope.modal_elementos.textConfig.colorfondo;
+                $($scope.modal_elementos.idpadre).attr('class',$scope.modal_elementos.anchoelegido.clase)
+                $scope.posiciontext( $scope.modal_elementos.posicion, id);
+            }
             // guardar elementos
 
             $scope.saveEdicion=function(){
@@ -917,6 +925,9 @@ angular.module('app.controllers', [])
                 }
                 if ($($scope.id_padre).attr("class") === 'panelP card grid _md') {
                     $scope.panel();
+                }
+                if ($($scope.id_padre).children('.check').attr("class") === 'input-group-addon check' ){
+                    $scope.check();
                 }
                 ngDialog.closeAll();
             }
@@ -939,12 +950,15 @@ angular.module('app.controllers', [])
         //cambio id a hijos de los elementos
         $($scope.id_padre).children('.textotitulo').attr('id','titulotxto'+padre_id);
         $($scope.id_padre).children('.panelbody').attr('id',"panelb" + contador);
+        $($scope.id_padre).children('.check').attr('id','check'+padre_id);
+        $($scope.id_padre).children('.textocheck').attr('id','check hermano'+padre_id);
 
         // array de elemento
 
             $scope.Atributos_elementos={
                 textbox:{},
-                boton:{}
+                boton:{},
+                check:{}
             };
         //array de elementos del modal
         $scope.modal_elementos={
@@ -988,6 +1002,13 @@ angular.module('app.controllers', [])
                 {id:2,height:'100px'},
                 {id:3,height:'150px'},
                 {id:4,height:'200px'},
+            ],
+           widthcheck:[
+                {id:1,width:'150px'},
+                {id:2,width:'200px'},
+                {id:3,width:'250px'},
+                {id:4,width:'300px'},
+                {id:5,width:'350px'}
             ]
 
         }
@@ -1093,6 +1114,60 @@ angular.module('app.controllers', [])
             $scope.Atributos_elementos.idpadre=$scope.hijo;
 
             $scope.modal_elementos.idhijo= $scope.Atributos_elementos.idpadre=$scope.hijo;
+        }
+        if($($scope.id_padre).children('.check').attr("class") === 'input-group-addon check'){
+            $scope.verattrcheck = 'true';
+            $scope.hijoprimario =$($scope.id_padre).children('.check').attr('id');
+            $scope.hijosecundario=$($scope.id_padre).children('.textocheck').attr('id');
+            $scope.hijo1=document.getElementById($scope.hijoprimario);
+            $scope.hijo2=document.getElementById($scope.hijosecundario);
+
+            $scope.Atributos_elementos.check.idabuelo           =   $scope.id_abuelo;
+            $scope.Atributos_elementos.check.idpadre            =   $scope.id_padre;
+            $scope.Atributos_elementos.check.idhijo1            =   $scope.hijo1;
+            $scope.Atributos_elementos.check.idhijo2            =   $scope.hijo2;
+            $scope.Atributos_elementos.check.color_fondo        =   $($scope.hijo1).css('background-color');
+            $scope.Atributos_elementos.check.clase              =   $($scope.id_padre).attr('class');
+            $scope.Atributos_elementos.check.widthcheck         =   $($scope.id_padre).css('width');
+
+            $scope.modal_elementos.widthcheck.push({id:6,width:  $scope.Atributos_elementos.check.widthcheck});
+            $scope.modal_elementos.largoelemento=$scope.modal_elementos.widthcheck[5];
+
+
+            $scope.modal_elementos.idabuelo                 =   $scope.Atributos_elementos.check.idabuelo;
+            $scope.modal_elementos.idpadre                  =   $scope.Atributos_elementos.check.idpadre;
+            $scope.modal_elementos.idhijo1                  =   $scope.Atributos_elementos.check.idhijo1;
+            $scope.modal_elementos.idhijo2                  =   $scope.Atributos_elementos.check.idhijo2;
+            $scope.modal_elementos.textConfig.colorfondo    =   $scope.Atributos_elementos.check.color_fondo;
+
+            if(  $scope.Atributos_elementos.check.clase==='input-group element'){
+                $scope.modal_elementos.anchoelegido     =   $scope.modal_elementos.anchotexto[2]
+            }
+            else
+                if(  $scope.Atributos_elementos.check.clase==='input-group input-group-lg'){
+                $scope.modal_elementos.anchoelegido     =   $scope.modal_elementos.anchotexto[0]
+            }
+            else
+                if(  $scope.Atributos_elementos.check.clase==='input-group input-group-sm'){
+                $scope.modal_elementos.anchoelegido     =   $scope.modal_elementos.anchotexto[1]
+            }
+
+           console.log($scope.Atributos_elementos.check.clase)
+
+            $scope.cambio = function () {
+                $scope.modal_elementos.idabuelo;
+                $scope.modal_elementos.idpadre;
+                $scope.modal_elementos.idhijo1;
+                $scope.modal_elementos.idhijo2;
+                $scope.modal_elementos.textConfig.colorfondo;
+                $scope.modal_elementos.anchoelegido;
+                $scope.modal_elementos.largoelemento;
+                $scope.modal_elementos.posicion;
+                $('#checkelemento').attr('class',$scope.modal_elementos.anchoelegido.clase)
+                $scope.posiciontext( $scope.modal_elementos.posicion,'checkelemento');
+
+            }
+
         }
 
     })

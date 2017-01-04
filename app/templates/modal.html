@@ -169,8 +169,8 @@
                     <div layout="column"   layout-align="center center" class="md-color-picker-checkered-bg" style="height: 80px">
                         <div flex="80">
                             <div id="check" class="input-group element">
-                                <div class="input-group element" ng-style="{'width':largoelemento.width}" id="checkelemento">
-                                    <span class="input-group-addon check" ng-style="{'background-color':textConfig.colorfondo}">
+                                <div class="input-group element" ng-style="{'width':modal_elementos.largoelemento.width}" id="checkelemento">
+                                    <span class="input-group-addon check" ng-style="{'background-color':modal_elementos.textConfig.colorfondo}">
                                         <input type="checkbox" aria-label="..." ></span>
                                     <input type="text" class="form-control textocheck" aria-label="..." >
                                 </div>
@@ -182,26 +182,26 @@
             <div layout="row">
                     <md-input-container flex="50" >
                         <label>Largo elemento</label>
-                        <md-select ng-model="largoelemento"  ng-change="cambio()">
-                            <md-option ng-value="largocheck" ng-repeat="largocheck in widthcheck">{{largocheck.width}}</md-option>
+                        <md-select ng-model="modal_elementos.largoelemento"  ng-change="cambio()">
+                            <md-option ng-value="largocheck" ng-repeat="largocheck in modal_elementos.widthcheck">{{largocheck.width}}</md-option>
                         </md-select>
                     </md-input-container>
                 <md-input-container>
                     <label>Ancho elemento</label>
-                    <md-select ng-model="anchoelegido.opcion"  ng-change="cambio()">
-                        <md-option ng-value="anchotext"  ng-repeat="anchotext in anchotexto">{{anchotext.name}}</md-option>
+                    <md-select ng-model="modal_elementos.anchoelegido"  ng-change="cambio()">
+                        <md-option ng-value="anchotext"  ng-repeat="anchotext in modal_elementos.anchotexto">{{anchotext.name}}</md-option>
                     </md-select>
                 </md-input-container>
                 </div>
                 <div layout="row">
                     <container flex="50">
                         <p>posicion:</p>
-                        <md-radio-group ng-model="posicion.opcion" ng-change="cambio()">
+                        <md-radio-group ng-model="modal_elementos.posicion" ng-change="cambio()">
                             <md-radio-button value="izquierda" class="md-primary">izquierda</md-radio-button>
                             <md-radio-button value="derecha"> derecha</md-radio-button>
                         </md-radio-group>
                     </container>
-                    <div md-color-picker="textConfig.optionsb" ng-model="textConfig.colorfondo"  ng-change="cambio()"></div>
+                    <div md-color-picker="textConfig.optionsb" ng-model="modal_elementos.textConfig.colorfondo"  ng-change="cambio()"></div>
                 </div>
         </div>
         <div layout="column" id="attrparrafo" ng-show="verattrparrafo" style="margin:4px; padding: 2px" layout-padding="5" layout-margin="5">

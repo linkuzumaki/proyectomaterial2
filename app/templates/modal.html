@@ -212,15 +212,15 @@
                         <div flex="80">
                             <div id="parrafos" >
                                 <md-content flex layout-padding class="input-group element parrafoPH"
-                                            ng-style="{'background-color':textConfig.textfondo,
+                                            ng-style="{'background-color':modal_elementos.textConfig.textfondo,
                                                        ' word-wrap':'break-word','width':'230px'}">
-                                    <p class="lead element"  id="parrafoh" draggable="false" ng-modal="elemento.parrafo" ng-bind="modal.nomb_elemento"
-                                       ng-style="{'color':textConfig.textcolor,
-                                                  'font-family':familiaelegida.name,
-                                                   'font-size':font_size.opcion+'px',
-                                                   'text-align':font_align,
-                                                   'font-weight':font_weight,
-                                                   'font-style':font_style}">
+                                    <p class="lead element"  id="parrafoh" draggable="false" ng-modal="modal_elementos.parrafo" ng-bind="modal_elementos.nomb_elemento"
+                                       ng-style="{'color':modal_elementos.textConfig.textcolor,
+                                                  'font-family':modal_elementos.familiaelegida.name,
+                                                   'font-size':modal_elementos.font_size+'px',
+                                                   'text-align':modal_elementos.font_align,
+                                                   'font-weight':modal_elementos.font_weight,
+                                                   'font-style':modal_elementos.font_style}">
                                         Lorem ipsum dolor sit amet, ne quod novum mei.</p>
                                 </md-content>
                             </div>
@@ -264,7 +264,7 @@
                 <div flex>
                     <md-input-container class="md-block">
                         <label>texto</label>
-                        <input required name="nomb_elemento" ng-model="modal.nomb_elemento" id="parrafomodal" >
+                        <input required name="nomb_elemento" ng-model="modal_elementos.nomb_elemento" id="parrafomodal" >
                     </md-input-container>
                 </div>
             </div>
@@ -272,34 +272,34 @@
                 <div flex>
                     <md-input-container>
                         <label>fuente</label>
-                        <md-select ng-model="familiaelegida" ng-model-options="{trackBy: '$value.id'}">
-                            <md-option ng-value="user" ng-repeat="user in fontfamilia">{{ user.name }}</md-option>
+                        <md-select ng-model="modal_elementos.familiaelegida" ng-model-options="{trackBy: '$value.id'}">
+                            <md-option ng-value="user" ng-repeat="user in modal_elementos.fontfamilia">{{ user.name }}</md-option>
                         </md-select>
                     </md-input-container>
                 </div>
                 <div flex>
                     <md-input-container>
                         <label>tamaño fuente</label>
-                        <input required name="font_size" ng-model="font_size.opcion" id="parrafosizemodal">
+                        <input required name="font_size" ng-model="modal_elementos.font_size" id="parrafosizemodal" ng-change="cambio()">
                     </md-input-container>
                 </div>
             </div>
             <div layout="row">
                 <div flex>
-                    <div md-color-picker="textConfig.optionsf" ng-model="textConfig.textcolor"  ng-change="cambio()"></div>
+                    <div md-color-picker="textConfig.optionsf" ng-model="modal_elementos.textConfig.textcolor"  ng-change="cambio()"></div>
                 </div>
                 <div flex>
-                    <div md-color-picker="textConfig.optionsb" ng-model="textConfig.textfondo"  ng-change="cambio()"></div>
+                    <div md-color-picker="textConfig.optionsb" ng-model="modal_elementos.textConfig.textfondo"  ng-change="cambio()"></div>
                 </div>
 
             </div>
         </div>
         <div layout="column" id="attrimg" ng-show="verattrimg" style="margin:4px; padding: 2px" layout-padding="5" layout-margin="5">
             <div layout="row"  id="imgcuadrado">
-                <img ng-src="{{srcimagen}}"  class="md-card-image"   height="200" style="width: 100%" id="imgmodal" ng-style="{'width':anchoelement.width,'height':altoelement.height}"/>
+                <img ng-src="{{modal_elementos.srcimagen}}"  class="md-card-image"   height="200" style="width: 100%" id="imgmodal" ng-style="{'width':modal_elementos.anchoelement.width,'height':modal_elementos.altoelement.height}"/>
             </div>
             <div layout="row" style="display: none" id="imgcircular">
-                <img ng-src="{{srcimagen}}" class="circular--square" ng-style="{'width':anchoelement.width,'height':altoelement.height}"
+                <img ng-src="{{modal_elementos.srcimagen}}" class="circular--square" ng-style="{'width':modal_elementos.anchoelement.width,'height':modal_elementos.altoelement.height}"
                      style="width: 150px;height: 150px"/>
             </div>
             <div layout="row">
@@ -308,20 +308,20 @@
             <div layout="row">
                 <md-input-container flex="50" >
                     <label>Ancho elemento</label>
-                    <md-select ng-model="anchoelement" ng-model-options="{trackBy: '$value.id'}" ng-change="cambio()">
-                        <md-option ng-value="anchobtn" ng-repeat="anchobtn in widthbuton">{{ anchobtn.width }}</md-option>
+                    <md-select ng-model="modal_elementos.anchoelement" ng-model-options="{trackBy: '$value.id'}" ng-change="cambio()">
+                        <md-option ng-value="anchobtn" ng-repeat="anchobtn in modal_elementos.widthbuton">{{ anchobtn.width }}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container flex="50" >
                     <label>Alto elemento</label>
-                    <md-select ng-model="altoelement" ng-model-options="{trackBy: '$value.id'}" ng-change="cambio()">
-                        <md-option ng-value="altobtn" ng-repeat="altobtn in heightbuton">{{ altobtn.height }}</md-option>
+                    <md-select ng-model="modal_elementos.altoelement" ng-model-options="{trackBy: '$value.id'}" ng-change="cambio()">
+                        <md-option ng-value="altobtn" ng-repeat="altobtn in modal_elementos.heightbuton">{{ altobtn.height }}</md-option>
                     </md-select>
                 </md-input-container>
                 <md-input-container flex="50">
-                    <md-radio-group ng-model="formaimmagen.opcion"  ng-change="cambio()">
+                    <md-radio-group ng-model="modal_elementos.formaimmagen"  ng-change="cambio()">
                         <md-radio-button class="md-primary"
-                                         ng-repeat="it in formaimg"
+                                         ng-repeat="it in modal_elementos.formaimg"
                                          ng-value="it.value"
                                          aria-label="{{it.title}}">{{it.name}}
                         </md-radio-button>
@@ -335,10 +335,10 @@
                     <h4>Preview</h4>
                     <div layout="column"   layout-align="center center" class="md-color-picker-checkered-bg" style="height: 80px">
                         <div flex="80">
-                            <label  class="textoselect" ng-bind="tituloselect" ng-style="{'color':textConfig.textcolor,'font-family':familiaelegida.name}">Select list:</label>
+                            <label  class="textoselect" ng-bind="modal_elementos.tituloselect" ng-style="{'color':modal_elementos.textConfig.textcolor,'font-family':modal_elementos.familiaelegida.name}">Select list:</label>
                             <select class="form-control selecthijo" ng-model="listaelegida" id="sel1"
-                                    ng-style="{'width':largoelemento.width,}">
-                                <option ng-repeat="listaselect in lista">{{listaselect.texto}}</option>
+                                    ng-style="{'width':modal_elementos.largoelemento.width,}">
+                                <option ng-repeat="listaselect in modal_elementos.lista">{{listaselect.texto}}</option>
                             </select>
                         </div>
                     </div>
@@ -350,14 +350,14 @@
                         <div flex="100">
                             <md-input-container flex="100">
                                 <label>cambiar Titulo</label>
-                                <input required name="nomb_elemento" ng-model="tituloselect" ng-change="cambio()" id="tituloselect">
+                                <input required name="nomb_elemento" ng-model="modal_elementos.tituloselect" ng-change="cambio()" id="tituloselect">
                             </md-input-container>
                         </div>
                         <div flex="100">
                             <md-input-container>
                                 <label>Largo elemento</label>
-                                <md-select ng-model="largoelemento"  ng-change="cambio()">
-                                    <md-option ng-value="largotext" ng-repeat="largotext in widthcheck">{{ largotext.width }}</md-option>
+                                <md-select ng-model="modal_elementos.largoelemento"  ng-change="cambio()">
+                                    <md-option ng-value="largotext" ng-repeat="largotext in modal_elementos.widthcheck">{{ largotext.width }}</md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
@@ -366,13 +366,13 @@
                 <div flex>
                     <div layout="column">
                         <div flex="100">
-                            <div md-color-picker="textConfig.optionsf" ng-model="textConfig.textcolor"  ng-change="cambio()"></div>
+                            <div md-color-picker="textConfig.optionsf" ng-model="modal_elementos.textConfig.textcolor"  ng-change="cambio()"></div>
                         </div>
                         <div flex="100">
                             <md-input-container flex="100">
                                 <label>fuente</label>
-                                <md-select ng-model="familiaelegida" ng-model-options="{trackBy: '$value.id'}">
-                                    <md-option ng-value="user" ng-repeat="user in fontfamilia">{{ user.name }}</md-option>
+                                <md-select ng-model="modal_elementos.familiaelegida" ng-model-options="{trackBy: '$value.id'}">
+                                    <md-option ng-value="user" ng-repeat="user in modal_elementos.fontfamilia">{{ user.name }}</md-option>
                                 </md-select>
                             </md-input-container>
                         </div>
@@ -383,7 +383,7 @@
                 <div flex="70">
                     <md-input-container  flex="100"  class="md-block">
                         <label>agregar datos al select</label>
-                        <input ng-model="nuevodato"  id="agregarlistelemento">
+                        <input ng-model="modal_elementos.nuevodato"  id="agregarlistelemento">
                     </md-input-container>
                 </div>
                 <div flex="20">
@@ -394,7 +394,7 @@
                 <div flex="100">
                     <md-divider></md-divider>
                     <md-subheader class="md-no-sticky">Datos:</md-subheader>
-                    <md-list-item class="secondary-button-padding" ng-repeat="info in datos">
+                    <md-list-item class="secondary-button-padding" ng-repeat="info in modal_elementos.datos">
                         <p>{{info.texto}}</p>
                         <!--<md-button ng-click="consola(datos,$index)">ver</md-button>-->
                         <md-button class="md-secondary" ng-click="eliminarlista($index)"><i class="material-icons">delete</i></md-button>
@@ -410,8 +410,8 @@
                     <div layout="column"   layout-align="center center" class="md-color-picker-checkered-bg" style="height: 200px">
                         <div flex="80">
                             <div id="txtarea">
-                                <div  class="form-group element areap"  ng-style="{'width':largoelemento.width}">
-                                    <label for="comment" ng-bind="nomb_elemento" ng-style="{'color': textConfig.textcolor}" id="areatitulo" >Comment:</label>
+                                <div  class="form-group element areap"  ng-style="{'width':modal_elementos.largoelemento.width}">
+                                    <label for="comment" ng-bind="modal_elementos.nomb_elemento" ng-style="{'color':modal_elementos.textConfig.textcolor}" id="areatitulo" >Comment:</label>
                                     <textarea class="form-control"  rows="5" id="comment"></textarea>
                                 </div>
                             </div>
@@ -423,7 +423,7 @@
                 <div flex="100">
                     <md-input-container  flex="100"  class="md-block">
                         <label>Titulo</label>
-                        <input required name="nomb_elemento" ng-model="nomb_elemento" ng-change="cambio()" id="nombreelementoarea">
+                        <input required name="nomb_elemento" ng-model="modal_elementos.nomb_elemento" ng-change="cambio()" id="nombreelementoarea">
                     </md-input-container>
                 </div>
             </div>
@@ -431,13 +431,13 @@
                 <div flex>
                     <md-input-container>
                         <label>Largo elemento</label>
-                        <md-select ng-model="largoelemento"  ng-change="cambio()">
-                            <md-option ng-value="largotext" ng-repeat="largotext in widthcheck">{{ largotext.width }}</md-option>
+                        <md-select ng-model="modal_elementos.largoelemento"  ng-change="cambio()">
+                            <md-option ng-value="largotext" ng-repeat="largotext in modal_elementos.widthcheck">{{ largotext.width }}</md-option>
                         </md-select>
                     </md-input-container>
                 </div>
                 <div flex>
-                    <div md-color-picker="textConfig.optionsf" ng-model="textConfig.textcolor"  ng-change="cambio()"></div>
+                    <div md-color-picker="textConfig.optionsf" ng-model="modal_elementos.textConfig.textcolor"  ng-change="cambio()"></div>
                 </div>
             </div>
         </div>

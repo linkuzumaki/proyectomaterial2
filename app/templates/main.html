@@ -35,7 +35,7 @@
                                     <md-button crear-elementos id="elemt6" class="md-raised md-primary"><i class="material-icons md-48">border_outer</i></md-button>
                                 </md-list-item>
                                 <md-list-item >
-                                    <div id="parrafos" style="display:none" ng-controller="ModalCtrl">
+                                    <div id="parrafos" style="display:none" ng-controller="OpenModalCtrl">
                                         <md-content flex layout-padding class="input-group element parrafoPH" style="word-wrap: break-word" >
                                             <p class="lead element"  id="parrafoh" draggable="false" ng-modal="elemento.parrafo">
                                                 Lorem ipsum dolor sit amet, ne quod novum mei.</p>
@@ -54,7 +54,7 @@
                                 </md-list-item>
                                 <md-list-item>
                                     <div id="select" style="display: none">
-                                        <div class="form-group element selectP" ng-controller="ModalCtrl">
+                                        <div class="form-group element selectP" ng-controller="OpenModalCtrl">
                                             <label  class="textoselect">Select list:</label>
                                             <select class="form-control selecthijo" ng-model="listan" ng-options="listaselect.texto for listaselect in lista" ng-mouseenter="verlista()" >
 
@@ -81,7 +81,7 @@
                                     <md-button crear-elementos id="elemt3" class="md-raised md-primary">texto+</md-button>
                                 </md-list-item>
                                 <md-list-item>
-                                    <div id="check" style="display:none" class="textoP" ng-controller="ModalCtrl">
+                                    <div id="check" style="display:none" class="textoP" ng-controller="OpenModalCtrl">
                                         <div class="input-group element" >
                                             <span class="input-group-addon check" style="border-color: #9d9d9d"><input type="checkbox" aria-label="..." ></span>
                                             <input type="text" class="form-control textocheck" aria-label="..." >

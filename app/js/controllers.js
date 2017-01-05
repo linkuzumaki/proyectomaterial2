@@ -1,5 +1,6 @@
 var contador = 0;
 var imgsave;
+const nb_form='Nombre Formulario';
 angular.module('app.controllers', [])
     .controller('mainController', function ($scope) {
             $scope.message = 'Hola, Mundo!';
@@ -119,18 +120,19 @@ angular.module('app.controllers', [])
 
         }
     })
-    .controller('OpenModalCtrl',['$scope','ngDialog','fileReader',"storageLista","$mdToast",'dbelemento','$timeout',function($scope,ngDialog,fileReader,storageLista,$mdToast,dbelemento,$timeout){
+    .controller('OpenModalCtrl',['$scope','ngDialog','fileReader',"storageLista","$mdToast",'dbelemento','$timeout','$mdDialog',function($scope,ngDialog,fileReader,storageLista,$mdToast,dbelemento,$timeout,$mdDialog){
 
             $scope.myDate = new Date();
             $scope.user = null;
-            $scope.users = null;
+            $scope.usernew={};
+            $scope.cambiojob = function () {
 
-            $scope.loadUsers = function() {
-
-                // Use timeout to simulate a 650ms request.
-                return $timeout(function() {
-
-                    $scope.users =  $scope.users  || [
+                $scope.usernew.name=$scope.user.name;
+                console.log($scope.usernew.name)
+            }
+        console.log($scope.usernew.name)
+            console.log(document.getElementById("formulario_name").innerHTML)
+            $scope.users =[
                             { id: 1, name: 'Scooby Doo' },
                             { id: 2, name: 'Shaggy Rodgers' },
                             { id: 3, name: 'Fred Jones' },
@@ -138,22 +140,19 @@ angular.module('app.controllers', [])
                             { id: 5, name: 'Velma Dinkley' }
                         ];
 
-                }, 650);
-            };
-
+            //elimina y cambia de evento al calendario
             $scope.initDatepicker = function(){
                 angular.element(".md-datepicker-button").each(function(){
                     var el = this;
                     var ip = angular.element(el).parent().find("input").bind('click', function(e){
                         angular.element(el).click();
                     });
-                    //angular.element(this).css('visibility', 'hidden');
+                    angular.element(this).css('visibility', 'hidden');
                 });
             };
             //abren el modal
             $scope.abrirModal=function() {
                 id_elemento = document.getElementById(event.target.id);
-
                 $scope.dialog = ngDialog.open({
                 class: 'ngdialog-theme-default',
                 template: 'templates/modal.html',
@@ -386,8 +385,24 @@ angular.module('app.controllers', [])
                 $scope.id_abuelo=document.getElementById(abuelo_id)
                 var padre_id = $($scope.id_abuelo).children().attr('id');
                 $scope.id_padre=document.getElementById(padre_id)
-                console.log( $scope.nomb_formulario)
-                if($scope.nomb_formulario==='hola mundo') {
+
+
+                console.log( document.getElementById("formulario_name").innerHTML)
+                console.log($scope.usernew.name)
+                $scope.valorinputForm= document.getElementById("formulario_name").innerHTML;
+
+                if($scope.valorinputForm===nb_form || $scope.usernew === null) {
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                            .parent(angular.element(document.querySelector('#popupContainer')))
+                            .clickOutsideToClose(true)
+                            .title('Aviso de falta de dato')
+                            .textContent('para editar , porfavor primero cambia el nombre del formulario.')
+                            .ariaLabel('Alert Dialog Demo')
+                            .ok('ir')
+                            .targetEvent()
+                    );
+                }else{
                     //guarda los cabios realizados
                     if ($($scope.id_padre).children('.texto').attr("class") === 'form-control texto') {
                         $scope.texbox($scope.id_padre);
@@ -413,15 +428,15 @@ angular.module('app.controllers', [])
                     if ($($scope.id_padre).attr("class") === 'form-group element areap') {
                         $scope.textarea();
                     }
-                }else{
-                   console.log('es difernete al form por defecto')
+
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('modificacion exitosa')
+                            .hideDelay(1000)
+                            .position('top right')
+                    );
                 }
-                $mdToast.show(
-                    $mdToast.simple()
-                        .textContent('modificacion exitosa')
-                        .hideDelay(1000)
-                        .position('top right')
-                );
+
                 ngDialog.closeAll();
             }
 

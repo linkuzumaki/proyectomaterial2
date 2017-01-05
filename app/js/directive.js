@@ -174,10 +174,10 @@ angular.module('app.directive', [])
             // store refererences
             var $ = angular.element;
             var body = $($document[0].body);
-            var input = $('<input class="form-control" type="text" placeholder="hola"/>');
+            var input = $('<input id="nb_formulario" class="form-control" type="text"/>');
 
             // initial value
-            scope.text="hola mundo"
+            scope.text="Nombre Formulario"
             element.text(scope.text);
 
 

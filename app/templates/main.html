@@ -128,14 +128,15 @@
                         <md-card-header-text>
                             <md-toolbar ng-controller="OpenModalCtrl">
                                 <div class="md-toolbar-tools" layout="row">
-                                    <div flex="">
-                                        <span ltc-editable  ng-model="nomb_formulario" ></span>
+                                    <div flex>
+                                        <span ltc-editable  ng-model="nomb_formulario" id="formulario_name"></span>
                                     </div>
                                     <div flex>
-                                        <md-input-container class="md-block" flex-gt-sm >
-                                            <md-select placeholder="Lugar de trabajo" ng-model="user" md-on-open="loadUsers()" style="min-width: 200px;">
+                                        <md-input-container class="md-block">
+                                            <md-select placeholder="Lugar de trabajo" ng-model="user" ng-change="cambiojob()" style="min-width: 200px;">
                                                 <md-option ng-value="user" ng-repeat="user in users">{{user.name}}</md-option>
                                             </md-select>
+
                                         </md-input-container>
                                     </div>
                                     <div flex ng-init="initDatepicker();">

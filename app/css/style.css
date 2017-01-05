@@ -159,3 +159,13 @@ textarea {
 md-input-container{
     width: 100%;
 }
+md-datepicker{
+    background: transparent;
+
+}
+.md-datepicker-input{
+    color: rgb(250,250,250);
+}
+#form_ubicacion{
+    color: rgb(250,250,250)!important;
+}

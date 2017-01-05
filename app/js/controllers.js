@@ -119,8 +119,37 @@ angular.module('app.controllers', [])
 
         }
     })
-    .controller('OpenModalCtrl',['$scope','ngDialog','fileReader',"storageLista","$mdToast",function($scope,ngDialog,fileReader,storageLista,$mdToast){
+    .controller('OpenModalCtrl',['$scope','ngDialog','fileReader',"storageLista","$mdToast",'dbelemento','$timeout',function($scope,ngDialog,fileReader,storageLista,$mdToast,dbelemento,$timeout){
 
+            $scope.myDate = new Date();
+            $scope.user = null;
+            $scope.users = null;
+
+            $scope.loadUsers = function() {
+
+                // Use timeout to simulate a 650ms request.
+                return $timeout(function() {
+
+                    $scope.users =  $scope.users  || [
+                            { id: 1, name: 'Scooby Doo' },
+                            { id: 2, name: 'Shaggy Rodgers' },
+                            { id: 3, name: 'Fred Jones' },
+                            { id: 4, name: 'Daphne Blake' },
+                            { id: 5, name: 'Velma Dinkley' }
+                        ];
+
+                }, 650);
+            };
+
+            $scope.initDatepicker = function(){
+                angular.element(".md-datepicker-button").each(function(){
+                    var el = this;
+                    var ip = angular.element(el).parent().find("input").bind('click', function(e){
+                        angular.element(el).click();
+                    });
+                    //angular.element(this).css('visibility', 'hidden');
+                });
+            };
             //abren el modal
             $scope.abrirModal=function() {
                 id_elemento = document.getElementById(event.target.id);
@@ -205,6 +234,7 @@ angular.module('app.controllers', [])
             //modifica los atributos segun lo escrito en el modal
 
             $scope.texbox=function(){
+
                 $($scope.modal_elementos.idtitulo).text($scope.modal_elementos.nomb_elemento);
                 idabuelo    =   $scope.modal_elementos.idabuelo;
                 idtitulo    =   $scope.modal_elementos.idtitulo;
@@ -215,6 +245,19 @@ angular.module('app.controllers', [])
                 idabuelo.style.width            =   $scope.modal_elementos.largoelemento.width;
                 $($scope.modal_elementos.idpadre).attr('class',$scope.modal_elementos.anchoelegido.clase)
                 $scope.posiciontext($scope.modal_elementos.posicion,id);
+
+                //guardar elementos al mongodb
+
+
+               /* $scope.elementosavemongo.nombreformulario=$scope.nomb_formulario;
+                $scope.elementosavemongo.fechaformulario=$scope.fecha_formulario;
+                $scope.elementosavemongo.lugartrabajo=$scope.lugar_trabajo;
+                $scope.elementosavemongo.elementos={elemento:$scope.modal_elementos.idabuelo};
+                dbelemento.guardarelemento($scope.elementosavemongo);*/
+
+
+
+
             }
             $scope.boton=function () {
 
@@ -343,33 +386,36 @@ angular.module('app.controllers', [])
                 $scope.id_abuelo=document.getElementById(abuelo_id)
                 var padre_id = $($scope.id_abuelo).children().attr('id');
                 $scope.id_padre=document.getElementById(padre_id)
-
-                //guarda los cabios realizados
-                if($($scope.id_padre).children('.texto').attr("class") === 'form-control texto') {
-                    $scope.texbox($scope.id_padre);
+                console.log( $scope.nomb_formulario)
+                if($scope.nomb_formulario==='hola mundo') {
+                    //guarda los cabios realizados
+                    if ($($scope.id_padre).children('.texto').attr("class") === 'form-control texto') {
+                        $scope.texbox($scope.id_padre);
+                    }
+                    if ($($scope.id_abuelo).attr("class") === 'element boton grid ng-scope') {
+                        $scope.boton();
+                    }
+                    if ($($scope.id_padre).attr("class") === 'panelP card grid _md') {
+                        $scope.panel();
+                    }
+                    if ($($scope.id_padre).children('.check').attr("class") === 'input-group-addon check') {
+                        $scope.check();
+                    }
+                    if ($($scope.id_padre).attr("class") === 'input-group element parrafoPH layout-padding _md flex') {
+                        $scope.cuadrotexto();
+                    }
+                    if ($($scope.id_padre).attr("class") === 'thumbnail element') {
+                        $scope.imagen();
+                    }
+                    if ($($scope.id_padre).attr("class") === 'form-group element selectP ng-scope') {
+                        $scope.select();
+                    }
+                    if ($($scope.id_padre).attr("class") === 'form-group element areap') {
+                        $scope.textarea();
+                    }
+                }else{
+                   console.log('es difernete al form por defecto')
                 }
-                if($($scope.id_abuelo).attr("class") === 'element boton grid ng-scope') {
-                    $scope.boton();
-                }
-                if($($scope.id_padre).attr("class") === 'panelP card grid _md') {
-                    $scope.panel();
-                }
-                if($($scope.id_padre).children('.check').attr("class") === 'input-group-addon check' ){
-                    $scope.check();
-                }
-                if($($scope.id_padre).attr("class") === 'input-group element parrafoPH layout-padding _md flex'){
-                    $scope.cuadrotexto();
-                }
-                if($($scope.id_padre).attr("class") === 'thumbnail element') {
-                    $scope.imagen();
-                }
-                if($($scope.id_padre).attr("class") === 'form-group element selectP ng-scope'){
-                    $scope.select();
-                }
-                if($($scope.id_padre).attr("class")==='form-group element areap'){
-                    $scope.textarea();
-                }
-
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent('modificacion exitosa')
@@ -417,6 +463,7 @@ angular.module('app.controllers', [])
                 select:{},
                 textarea:{}
             };
+        $scope.elementosavemongo={};
         //array de elementos del modal
         $scope.modal_elementos={
             fontfamilia:[

@@ -18,11 +18,11 @@ angular.module('app.service',[])
        var  elementos1=[];
         this.guardarelemento=function(elemento){
             $http.post('/elemento',({
-                idform:elemento.idform,
-                nameform:elemento.nombre,
-                dateform:elemento.dateform,
-                idelement:elemento.idelemento,
-                element:elemento.elementos,
+                idform      :elemento.idform,
+                nameform    :elemento.nombre,
+                dateform    :elemento.dateform,
+                idelement   :elemento.idelemento,
+                element     :elemento.elementos,
 
             }))
                 .then(function () {
@@ -36,15 +36,6 @@ angular.module('app.service',[])
                 .catch(function(err){
                     console.log('Error: ' + err);
                 })
-
-
-                elementos.nameform=elemento.nombre;
-                elementos.dateform=elemento.fecha;
-
-            console.log(elementos)
-
-
-
 
         }
         this.mostrarall=function () {

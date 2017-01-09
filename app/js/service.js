@@ -18,10 +18,10 @@ angular.module('app.service',[])
        var  elementos1=[];
         this.guardarelemento=function(elemento){
             $http.post('/elemento',({
-                idform      :elemento.idform,
-                nameform    :elemento.nombre,
+                idform      :elemento.nombreformularioid,
+                nameform    :elemento.nombreformulario,
                 dateform    :elemento.dateform,
-                idelement   :elemento.idelemento,
+                idelement   :elemento.idelement,
                 element     :elemento.elementos,
 
             }))

@@ -18,8 +18,6 @@
         <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="bower_components/md-color-picker/dist/mdColorPicker.min.css" rel="stylesheet">
 
-
-
     </head>
     <body ng-controller="mainController">
         <div id="sideNavContainer" ng-controller="sideNavController" layout="row" ng-cloak>
@@ -30,8 +28,12 @@
                 </md-toolbar>
                 <md-list>
                     <md-list-item>
-                        <a>hola</a>
+                        <a ng-model="message">{{message}}</a>
                     </md-list-item>
+                    <md-list-item>
+                       <li><a href="hola">hola</a></li>
+                    </md-list-item>
+
                 </md-list>
             </md-sidenav>
             <md-sidenav md-component-id="right" class="md-sidenav-right">

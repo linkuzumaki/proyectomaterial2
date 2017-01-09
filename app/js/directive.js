@@ -133,7 +133,6 @@ angular.module('app.directive', [])
 
 }])
 
-
 .directive('fileInput',function($parse){
     return {
         restrict: "EA",
@@ -157,7 +156,6 @@ angular.module('app.directive', [])
     };
 
 })
-
 
 .directive("ltcEditable", function($document) {
     return {

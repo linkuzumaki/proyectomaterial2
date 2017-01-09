@@ -2,6 +2,8 @@ var contador = 0;
 var imgsave;
 const nb_form='Nombre Formulario';
 angular.module('app.controllers', [])
+
+
     .controller('mainController', function ($scope) {
             $scope.message = 'Hola, Mundo!';
         })
@@ -120,7 +122,7 @@ angular.module('app.controllers', [])
 
         }
     })
-    .controller('OpenModalCtrl',['$scope','ngDialog','fileReader',"storageLista","$mdToast",'dbelemento','$timeout','$mdDialog',function($scope,ngDialog,fileReader,storageLista,$mdToast,dbelemento,$timeout,$mdDialog){
+    .controller('OpenModalCtrl',['$scope','ngDialog','fileReader',"storageLista","$mdToast",'dbelemento','$timeout','$mdDialog','$http',function($scope,ngDialog,fileReader,storageLista,$mdToast,dbelemento,$timeout,$mdDialog,$http){
 
             $scope.myDate = new Date();
             $scope.user = null;
@@ -130,7 +132,7 @@ angular.module('app.controllers', [])
                 $scope.usernew.name=$scope.user.name;
                 console.log($scope.usernew.name)
             }
-        console.log($scope.usernew.name)
+            console.log($scope.usernew.name)
             console.log(document.getElementById("formulario_name").innerHTML)
             $scope.users =[
                             { id: 1, name: 'Scooby Doo' },
@@ -244,7 +246,6 @@ angular.module('app.controllers', [])
                 idabuelo.style.width            =   $scope.modal_elementos.largoelemento.width;
                 $($scope.modal_elementos.idpadre).attr('class',$scope.modal_elementos.anchoelegido.clase)
                 $scope.posiciontext($scope.modal_elementos.posicion,id);
-
                 //guardar elementos al mongodb
 
 
@@ -382,6 +383,7 @@ angular.module('app.controllers', [])
                 //obtner id  padre y abuelo del elemento
 
                 var abuelo_id = $(id_elemento).parent().attr("id");
+                console.log('abuelo:    '+abuelo_id)
                 $scope.id_abuelo=document.getElementById(abuelo_id)
                 var padre_id = $($scope.id_abuelo).children().attr('id');
                 $scope.id_padre=document.getElementById(padre_id)
@@ -391,7 +393,7 @@ angular.module('app.controllers', [])
                 console.log($scope.usernew.name)
                 $scope.valorinputForm= document.getElementById("formulario_name").innerHTML;
 
-                if($scope.valorinputForm===nb_form || $scope.usernew === null) {
+                if($scope.valorinputForm=== nb_form || $scope.usernew === null) {
                     $mdDialog.show(
                         $mdDialog.alert()
                             .parent(angular.element(document.querySelector('#popupContainer')))
@@ -405,6 +407,17 @@ angular.module('app.controllers', [])
                 }else{
                     //guarda los cabios realizados
                     if ($($scope.id_padre).children('.texto').attr("class") === 'form-control texto') {
+
+                        console.log($($scope.id_abuelo).html())
+
+                        $scope.elementosavemongo.nombreformularioid=$scope.valorinputForm;
+                        $scope.elementosavemongo.nombreformulario=$scope.valorinputForm;
+                        $scope.elementosavemongo.lugartrabajo=$scope.usernew ;
+                        $scope.elementosavemongo.idelement="id ab";
+                        $scope.elementosavemongo.elementos=$($scope.id_abuelo).html();
+
+
+                        dbelemento.guardarelemento($scope.elementosavemongo);
                         $scope.texbox($scope.id_padre);
                     }
                     if ($($scope.id_abuelo).attr("class") === 'element boton grid ng-scope') {
@@ -633,7 +646,7 @@ angular.module('app.controllers', [])
 
 
         }
-        if($($scope.id_padre).attr("class") === 'panelP card grid _md') {
+        if($($scope.id_padre).attr("class") === 'panelP card grid') {
             $scope.verattrpanel='true';
             $scope.hijo=$($scope.id_padre).children('.panelbody').attr('id')
             $scope.Atributos_elementos.idabuelo=$scope.id_abuelo;
@@ -861,3 +874,6 @@ angular.module('app.controllers', [])
             }
         }
     }])
+    .controller('contactController', function($scope) {
+        $scope.message = 'Esta es la página de "Contacto", aquí podemos poner un formulario';
+    });

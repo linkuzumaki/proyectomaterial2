@@ -2,7 +2,7 @@ angular.module('app.routes', [])
     .config(function($routeProvider) {
         $routeProvider
 
-            .when('/inicio', {
+            .when('/', {
                 templateUrl : 'templates/main.html',
                 controller  : 'mainController'
             })
@@ -14,8 +14,12 @@ angular.module('app.routes', [])
                 templateUrl : 'templates/contacto.html',
                 controller  : 'contactController'
             })
+            .when('/hola', {
+                templateUrl : 'templates/hola.html',
+                controller  : 'contactController'
+            })
             .otherwise({
-                redirectTo: '/inicio'
+                redirectTo: '/'
             });
 
     })

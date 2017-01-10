@@ -26,15 +26,14 @@
                     <h1 class="md-toolbar-tools">menu</h1>
 
                 </md-toolbar>
-                <md-list>
-                    <md-list-item>
-                        <a ng-model="message">{{message}}</a>
-                    </md-list-item>
-                    <md-list-item>
-                       <li><a href="hola">hola</a></li>
-                    </md-list-item>
-
-                </md-list>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button ng-href="#!/" >INICIO</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-href="#!/hola">EJEMPLO</md-button>
+                    </md-menu-item>
+                </md-menu-content>
             </md-sidenav>
             <md-sidenav md-component-id="right" class="md-sidenav-right">
                 <md-button href="http://google.com">Google</md-button>

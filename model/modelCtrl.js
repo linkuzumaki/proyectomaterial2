@@ -3,73 +3,51 @@ const   expres=require('express'),
         Elementos=require('./modelejemplo');
 module.exports=function (app) {
     guardardatos = function (req, res, next) {
-
-        var elementos = new Elementos({
-            nombre: req.body.nombre,
-            apellido: req.body.apellido,
-        })
-        elementos.save(function (err) {
-            if (!err) {
-                console.log("datos created");
-                //return res.send({ status: 'OK', datos:datos });
-                res.send(err);
-                //res.redirect('/index.html')
-            } else {
-                console.log(' datos no guardados' + err);
-                res.send(elementos);
+        var elementos = new Elementos(req.body);
+            elementos.save().then(function() {
+                res.send("datos guardados correctamente")
+                
+            }),function (err) {
+                console.log(String(err));
+                res.send("error al guardar los datos")
             }
-
-        })
 
     }
     obtnerall=function (req,res) {
         console.log("GET - /datos");
-        return Elementos.find(function(err,elementos){
-            if(!err){
-                return res.json(elementos);
-            }else {
-                res.status(500).send(err)
-
-            }
-        })
+        Elementos.find().then(function (elementos) {
+            res.send(elementos);
+        }),function (err) {
+            res.status(500).send(err)
+        }
     }
+
     actualizar=function (req, res, next) {
         console.log("put - /datos");
         console.log(req.params.id)
         var id = req.params.id
-        Elementos.findById(req.params.id, function(error,elemento){
-            if(error){
-                res.status(500).send(err);
-                console.log('error al enviar')
-            }else{
-                console.log('entro al enviar')
-                console.log(req.body.nombre||elemento.nombre)
-                elemento.nombre=req.body.nombre||elemento.nombre;
-                elemento.apellido=req.body.apellido ||elemento.apellido;
-                elemento.save(function(error){
-                    if(error){
-                        console.log(error)
-                    }else{
-                        console.log('save')
-                        res.send(elemento);
-                    }
-                });
+            elementos = new Elementos(req.body);
+            Elementos.findByIdAndUpdate(id,{$set:req.body}).then(function (elemento) {
+                console.log(elemento)
+            }),function (err) {
+                res.status(500).send(err)
             }
-
-        });
-
 
     }
     eliminardatos =function (req, res, next) {
         console.log(req.params.id)
         var id = req.params.id
-        Elementos.findByIdAndRemove(req.params.id, function (err, elemento) {
+
+        Elementos.findByIdAndRemove(id).then(function (elemento) {
             var response = {
                 message: "Todo successfully deleted",
                 id: elemento._id
             };
             res.send(response);
-        });
+        }),function (err) {
+            res.status(500).send(err)
+        }
+
     }
     app.post('/ejemplo/eliminar/:id',eliminardatos)
     app.post('/ejemplo/:id',actualizar );

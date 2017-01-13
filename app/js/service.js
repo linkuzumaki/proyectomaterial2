@@ -52,11 +52,7 @@ angular.module('app.service',[])
     .service('dbejemplo',function($mdToast,$http,$q){
 
         this.saveejemplo=function(elemento){
-            $http.post('/ejemplo',({
-                nombre    :elemento.nombre,
-                apellido    :elemento.apellido,
-
-            }))
+            $http.post('/ejemplo',(elemento))
                 .then(function () {
                     $mdToast.show(
                         $mdToast.simple()
@@ -86,13 +82,8 @@ angular.module('app.service',[])
         this.updatedato=function (datos) {
             var defered = $q.defer();
             var promise = defered.promise;
-            console.log(datos._id)
-            console.log(datos.nombre+"_____"+datos.apellido)
-            $http.post('/ejemplo/'+datos._id,({
-                nombre    :datos.nombre,
-                apellido    :datos.apellido,
 
-            }))
+            $http.post('/ejemplo/'+datos._id,(datos))
                 .then(function (data) {
                     defered.resolve(data);
                 })

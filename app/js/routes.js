@@ -14,12 +14,12 @@ angular.module('app.routes', [])
                 templateUrl : 'templates/contacto.html',
                 controller  : 'contactController'
             })
-            .when('/hola', {
-                templateUrl : 'templates/hola.html',
-                controller  : 'contactController'
+            .when('/ejemplo', {
+                templateUrl : 'templates/ejemplo.html',
+                controller  : 'ejemploController'
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/ejemplo'
             });
 
     })

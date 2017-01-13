@@ -15,8 +15,8 @@ app.use(express.static(__dirname + '/app'));
 app.use(express.static(__dirname + '/bower_components'));
 
 //routes = require('./model/modelCtrl.js')(app);
-routes=require('./model/grud_elementos.js')(app);
-
+//routes=require('./model/grud_elementos.js')(app);
+routes=require('./model/modelCtrl.js')(app)
 // Conexión
 mongoose.connect('mongodb://localhost:27017/proyectodb', function(err, database) {
     if (err) return console.log('erro de conexion bd'+err)

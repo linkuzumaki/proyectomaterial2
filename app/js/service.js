@@ -49,6 +49,78 @@ angular.module('app.service',[])
                 })
         }
     })
+    .service('dbejemplo',function($mdToast,$http,$q){
+
+        this.saveejemplo=function(elemento){
+            $http.post('/ejemplo',({
+                nombre    :elemento.nombre,
+                apellido    :elemento.apellido,
+
+            }))
+                .then(function () {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('dato guardado')
+                            .hideDelay(1000)
+                            .position('top right')
+                    );
+                })
+                .catch(function(err){
+                    console.log('Error: ' + err);
+                })
+
+        }
+        this.obtnertodos=function () {
+            var defered = $q.defer();
+            var promise = defered.promise;
+            
+            $http.get('/ejemplo')
+                .then(function (data) {
+                    defered.resolve(data);
+                })
+                .catch(function (err) {
+                    defered.reject(err)
+                })
+            return promise;
+        }
+        this.updatedato=function (datos) {
+            var defered = $q.defer();
+            var promise = defered.promise;
+            console.log(datos._id)
+            console.log(datos.nombre+"_____"+datos.apellido)
+            $http.post('/ejemplo/'+datos._id,({
+                nombre    :datos.nombre,
+                apellido    :datos.apellido,
+
+            }))
+                .then(function (data) {
+                    defered.resolve(data);
+                })
+                .catch(function (err) {
+                    defered.reject(err)
+                })
+            return promise;
+
+        }
+        this.eliminardatos=function(datos){
+            console.log("eliminar")
+            var defered = $q.defer();
+            var promise = defered.promise;
+            console.log(datos._id)
+            $http.post('/ejemplo/eliminar/'+datos._id)
+                .then(function (data) {
+                    defered.resolve(data);
+                })
+                .catch(function (err) {
+                    defered.reject(err)
+                })
+            return promise;
+
+        }
+
+
+
+    })
     .factory('fileReader',function($q, $log){
         var onLoad = function(reader, deferred, scope) {
             return function () {

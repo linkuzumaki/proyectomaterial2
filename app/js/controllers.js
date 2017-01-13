@@ -417,7 +417,7 @@ angular.module('app.controllers', [])
                         $scope.elementosavemongo.elementos=$($scope.id_abuelo).html();
 
 
-                        dbelemento.guardarelemento($scope.elementosavemongo);
+                       // dbelemento.guardarelemento($scope.elementosavemongo);
                         $scope.texbox($scope.id_padre);
                     }
                     if ($($scope.id_abuelo).attr("class") === 'element boton grid ng-scope') {
@@ -874,6 +874,57 @@ angular.module('app.controllers', [])
             }
         }
     }])
-    .controller('contactController', function($scope) {
-        $scope.message = 'Esta es la página de "Contacto", aquí podemos poner un formulario';
-    });
+    .controller('ejemploController',['$scope','dbejemplo', function($scope,dbejemplo) {
+
+        $scope.elemento = {}
+
+        $scope.save_dato = function () {
+            $scope.elemento.nombre = $scope.nombre;
+            $scope.elemento.apellido = $scope.apellido;
+            dbejemplo.saveejemplo($scope.elemento);
+            $scope.listadatos();
+            $scope.limpiar();
+        }
+        $scope.limpiar=function () {
+            $scope.nombre="";
+            $scope.apellido=""
+
+        }
+        $scope.listadatos=function () {
+            dbejemplo.obtnertodos().then(function (data) {
+                $scope.elementos = data.data;
+            }).catch(function (err){
+                console.log(err)
+            })
+        }
+        $scope.editardatos=function (datos) {
+            console.log(datos._id)
+            $scope.nombre = datos.nombre;
+            $scope.apellido = datos.apellido;
+        }
+        $scope.eliminardatos=function (datos) {
+           console.log("eliminar dato "+datos._id)
+            dbejemplo.eliminardatos(datos).then(function (data) {
+                console.log(data)
+            }).catch(function (err){
+                console.log(err)
+            })
+            $scope.listadatos();
+        }
+        $scope.updatedatos=function (datos) {
+            console.log(datos._id)
+            datos.nombre =$scope.nombre ;
+            datos.apellido =$scope.apellido;
+
+            dbejemplo.updatedato(datos).then(function (data) {
+               console.log(data)
+            }).catch(function (err){
+                console.log(err)
+            })
+            $scope.limpiar();
+            $scope.listadatos();
+        }
+        $scope.listadatos();
+
+
+    }]);

@@ -1,0 +1,51 @@
+<md-content ng-controller="ejemploController"  class="contenedor" >
+    <div layout="row">
+        <div flex="100" flex-gt-sm="25">
+            <md-card >
+                <md-card-header-text>
+                    <md-card-title>view mobil</md-card-title>
+                </md-card-header-text>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <md-input-container>
+                        <label>nombre</label>
+                        <input ng-model="nombre">
+                    </md-input-container>
+                    <md-input-container>
+                        <label>apellido</label>
+                        <input ng-model="apellido">
+                    </md-input-container>
+                    <button ng-click="save_dato()">save</button>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex="100" flex-gt-sm="55">
+            <md-card >
+                <md-card-header-text>
+                    <md-card-title>lista</md-card-title>
+                </md-card-header-text>
+                <md-divider></md-divider>
+                <md-card-content>
+                    <md-list>
+                        <md-list-item ng-repeat="datos in elementos">
+                            <div layout="row">
+                                <div flex="">nombre:<p>{{datos.nombre}}</p></div>
+                                <div flex="">apellido:<p>{{datos.apellido}}</p></div>
+                            </div>
+
+
+
+
+                            <md-button class="primary" ng-click="editardatos(datos)">editar </md-button>
+                            <md-button class="primary" ng-click="eliminardatos(datos)" >eliminar </md-button>
+                            <md-button class="primary" ng-click="updatedatos(datos)">actulizar </md-button>
+
+                            <md-divider></md-divider>
+                        </md-list-item>
+
+                    </md-list>
+                </md-card-content>
+            </md-card>
+        </div>
+    </div>
+</md-content>
